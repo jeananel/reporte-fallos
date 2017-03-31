@@ -1,0 +1,52 @@
+create table departamento(
+idDepartamento int not null PRIMARY KEY AUTO_INCREMENT,
+nombre varchar(50) not null
+);
+
+create table dispositivo(
+idDispositivo int not null PRIMARY KEY AUTO_INCREMENT,
+serie char(10)  not null,
+nombre varchar(50) not null,
+marca varchar(50) not null,
+idDepartamento int not null,
+created_by int  not null,
+created_at  DATETIME not null,
+updated_by int  not null,
+updated_at DATETIME not null,
+foreign key (created_by) references user(id),
+foreign key (updated_by) references user(id),
+foreign key (idDepartamento) references departamento(idDepartamento)
+);
+
+
+create table fallos(
+idFallos int  not null PRIMARY KEY AUTO_INCREMENT,
+descripcion varchar(50) not null,
+respuesta varchar(50) not null,
+estado ENUM( 'atendido', 'no atendido') NOT NULL DEFAULT 'no atendido',
+idDispositivo int not null,
+created_by int  not null,
+created_at  DATETIME not null,
+updated_by int  not null,
+updated_at DATETIME not null,
+foreign key (created_by) references user(id),
+foreign key (updated_by) references user(id),
+foreign key (idDispositivo) references dispositivo(idDispositivo)
+);
+
+
+create table datos_user(
+idDatos int  not null PRIMARY KEY AUTO_INCREMENT,
+apellidos varchar(50) not null,
+nombres varchar(50) not null,
+fecha_nacimiento date null,
+estado ENUM( 'masculino', 'femenino') NOT NULL DEFAULT 'masculino',
+direccion_principal varchar(100) null,
+telefono char(10) null,
+idUser int  not null,
+idDepartamento int not null,
+estado ENUM( 'validado', 'no validado') NOT NULL DEFAULT 'no validado',
+foreign key (idUser) references user(id),
+foreign key (idDepartamento) references departamento(idDepartamento)
+);
+
