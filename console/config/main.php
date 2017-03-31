@@ -28,4 +28,7 @@ return [
         ],
     ],
     'params' => $params,
+    'modules' => [
+        'rbac' => 'dektrium\rbac\RbacConsoleModule',
+    ],    
 ];
