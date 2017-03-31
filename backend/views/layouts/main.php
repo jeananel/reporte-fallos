@@ -42,6 +42,16 @@ AppAsset::register($this);
             //['label' => 'Contactos', 'url' => ['/site/contact']],
             //['label' => 'Perceptron', 'url' => ['/site/perceptron']],
             ['label' => 'Administracion', 'url' => ['/user/admin'] , 'visible'=> Yii::$app->user->can('administrador')],
+                    [
+            'label' => 'Opciones',
+            'items' => [
+                 ['label' => 'Departamentos', 'url' => ['/departamento/index']],
+                 '<li class="divider"></li>',
+                 '<li class="dropdown-header">Sistema</li>',
+                 ['label' => 'Dispositivos', 'url' => ['/dispositivo/index']],
+                 ['label' => 'Fallos', 'url' => ['/fallos/index']],
+            ],
+        ],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Ingresar', 'url' => ['/user/login']]
             ) : (
