@@ -1,10 +1,10 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use Yii;
 use common\models\Fallos;
-use backend\models\FallosSearch;
+use frontend\models\FallosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -29,17 +29,17 @@ class FallosController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'update', 'view', 'delete'],
+                        'actions' => ['index','create', 'update', 'view', 'delete'],
                         'allow' => true,
                         'roles' => ['administrador'],
                     ],                   
                     [
-                        'actions' => ['index','view'],
+                        'actions' => ['index','create',  'view'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
                 ],
-            ],            
+            ],             
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

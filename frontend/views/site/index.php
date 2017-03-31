@@ -13,13 +13,13 @@ $this->title = 'My Yii Application';
 
     <div class="jumbotron">
          
-        <h1> ADMINISTRACIÓN </h1>
+
         <div align="center">
-            <img  class=" img-circle img-responsive" src="http://190.152.10.220/siad_varios/images/logo.jpg">
+            <img height="150px" width="150px" class=" img-circle img-responsive" src="http://190.152.10.220/siad_varios/images/logo.jpg">
         </div>
         <p class="lead">Sistema de reporte de fallos de dispositivos departamentales.</p>
 
-        <p><a class="btn btn-lg btn-success" href="http://www.utelvt.edu.ec/sitioweb/">UNIVERSIDAD</a></p>
+       
     </div>
 
     <div class="body-content">

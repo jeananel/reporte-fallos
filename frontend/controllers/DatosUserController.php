@@ -1,18 +1,18 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use Yii;
-use common\models\Fallos;
-use backend\models\FallosSearch;
+use common\models\DatosUser;
+use frontend\models\DatosUserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * FallosController implements the CRUD actions for Fallos model.
+ * DatosUserController implements the CRUD actions for DatosUser model.
  */
-class FallosController extends Controller
+class DatosUserController extends Controller
 {
     /**
      * @inheritdoc
@@ -20,26 +20,6 @@ class FallosController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => \yii\filters\AccessControl::className(),
-                'rules' => [
-                    // Roles ? => Visitante , @ => Usuario logeado, superadmin=> super administrador , admin => docentes
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['index', 'update', 'view', 'delete'],
-                        'allow' => true,
-                        'roles' => ['administrador'],
-                    ],                   
-                    [
-                        'actions' => ['index','view'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],            
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -50,12 +30,12 @@ class FallosController extends Controller
     }
 
     /**
-     * Lists all Fallos models.
+     * Lists all DatosUser models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new FallosSearch();
+        $searchModel = new DatosUserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -65,7 +45,7 @@ class FallosController extends Controller
     }
 
     /**
-     * Displays a single Fallos model.
+     * Displays a single DatosUser model.
      * @param integer $id
      * @return mixed
      */
@@ -77,16 +57,16 @@ class FallosController extends Controller
     }
 
     /**
-     * Creates a new Fallos model.
+     * Creates a new DatosUser model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Fallos();
+        $model = new DatosUser();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idFallos]);
+            return $this->redirect(['view', 'id' => $model->idDatos]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -95,7 +75,7 @@ class FallosController extends Controller
     }
 
     /**
-     * Updates an existing Fallos model.
+     * Updates an existing DatosUser model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -105,7 +85,7 @@ class FallosController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idFallos]);
+            return $this->redirect(['view', 'id' => $model->idDatos]);
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -114,7 +94,7 @@ class FallosController extends Controller
     }
 
     /**
-     * Deletes an existing Fallos model.
+     * Deletes an existing DatosUser model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -127,15 +107,15 @@ class FallosController extends Controller
     }
 
     /**
-     * Finds the Fallos model based on its primary key value.
+     * Finds the DatosUser model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Fallos the loaded model
+     * @return DatosUser the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Fallos::findOne($id)) !== null) {
+        if (($model = DatosUser::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');

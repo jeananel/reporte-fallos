@@ -1,7 +1,9 @@
 <?php
 
 namespace backend\models;
-
+use yii\db\ActiveRecord;
+use yii\db\Expression;
+use \yii\behaviors\BlameableBehavior;
 use Yii;
 
 /**
@@ -38,7 +40,7 @@ class Dispositivo extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['serie', 'nombre', 'marca', 'idDepartamento', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'required'],
+            [['serie', 'nombre', 'marca', 'idDepartamento'], 'required'],
             [['idDepartamento', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['serie'], 'string', 'max' => 10],
@@ -66,7 +68,25 @@ class Dispositivo extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
-
+    // ---> TRIGERS 
+    public function behaviors() {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+            
+            'blameable' => [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+        ];
+    }  
     /**
      * @return \yii\db\ActiveQuery
      */

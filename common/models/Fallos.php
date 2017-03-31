@@ -1,7 +1,9 @@
 <?php
 
 namespace common\models;
-
+use yii\db\ActiveRecord;
+use yii\db\Expression;
+use \yii\behaviors\BlameableBehavior;
 use Yii;
 
 /**
@@ -37,11 +39,11 @@ class Fallos extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descripcion', 'respuesta', 'idDispositivo', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'required'],
+            [['descripcion', 'idDispositivo'], 'required'],
             [['estado'], 'string'],
             [['idDispositivo', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['descripcion', 'respuesta'], 'string', 'max' => 50],
+            [['descripcion', 'respuesta'], 'string', 'max' => 200],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['updated_by' => 'id']],
             [['idDispositivo'], 'exist', 'skipOnError' => true, 'targetClass' => \backend\models\Dispositivo::className(), 'targetAttribute' => ['idDispositivo' => 'idDispositivo']],
@@ -58,14 +60,33 @@ class Fallos extends \yii\db\ActiveRecord
             'descripcion' => 'Descripcion',
             'respuesta' => 'Respuesta',
             'estado' => 'Estado',
-            'idDispositivo' => 'Id Dispositivo',
-            'created_by' => 'Created By',
-            'created_at' => 'Created At',
-            'updated_by' => 'Updated By',
-            'updated_at' => 'Updated At',
+            'idDispositivo' => 'Dispositivo',
+            'created_by' => 'Creado por',
+            'created_at' => 'Hora de registro',
+            'updated_by' => 'Actualizado por',
+            'updated_at' => 'Hora de actualización',
         ];
     }
-
+    
+    // ---> TRIGERS 
+    public function behaviors() {
+        return [
+            'timestamp' => [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+            
+            'blameable' => [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'created_by',
+                'updatedByAttribute' => 'updated_by',
+            ],
+        ];
+    }  
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -87,6 +108,6 @@ class Fallos extends \yii\db\ActiveRecord
      */
     public function getIdDispositivo0()
     {
-        return $this->hasOne(Dispositivo::className(), ['idDispositivo' => 'idDispositivo']);
+        return $this->hasOne(\backend\models\Dispositivo::className(), ['idDispositivo' => 'idDispositivo']);
     }
 }

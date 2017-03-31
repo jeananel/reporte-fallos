@@ -2,27 +2,23 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\Dispositivo */
+/* @var $model common\models\Fallos */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="dispositivo-form">
+<div class="fallos-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'serie')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
+ <?= $form->field($model, 'descripcion')->textarea(['maxlength' => true, 'rows' => '6']) ?>
 
-    <?= $form->field($model, 'marca')->textInput(['maxlength' => true]) ?>
-
-
-
-    <?= $form->field($model, 'idDepartamento')->widget(Select2::classname(), [
-    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Departamento::find()->all(), 'idDepartamento', 'nombre'),
+    <?= $form->field($model, 'idDispositivo')->widget(\kartik\select2\Select2::classname(), [
+    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Dispositivo::find()->all(), 'idDispositivo', function ($model, $defaultValue) {
+                return $model->nombre . ' - ' . $model->serie;
+            }),
     'language' => 'es',
     'options' => ['placeholder' => 'Seleccione el departamento ...'],
     'pluginOptions' => [
@@ -30,7 +26,6 @@ use kartik\select2\Select2;
     ],
     ]) 
     ?>
-
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
