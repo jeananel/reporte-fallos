@@ -19,12 +19,12 @@ use kartik\datetime\DateTimePicker;
                 <?=
                 $form->field($model, 'fecha_nacimiento')->widget(DateTimePicker::className(), [
                     'pluginOptions' => [
-                        'value' => new Expression('NOW()'),
+                        'value' => new \yii\db\Expression('NOW()'),
                         'autoclose' => true,
                         'format' => 'yyyy-mm-dd',
                     ]
                 ])
-                ?>  
+                ?> 
 
     <?= $form->field($model, 'genero')->dropDownList([ 'masculino' => 'Masculino', 'femenino' => 'Femenino', ], ['prompt' => '']) ?>
 
@@ -32,14 +32,22 @@ use kartik\datetime\DateTimePicker;
 
     <?= $form->field($model, 'telefono')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'idUser')->textInput() ?>
 
-    <?= $form->field($model, 'idDepartamento')->textInput() ?>
+
+    <?= $form->field($model, 'idDepartamento')->widget(\kartik\select2\Select2::classname(), [
+    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Departamento::find()->all(), 'idDepartamento', 'nombre'),
+    'language' => 'es',
+    'options' => ['placeholder' => 'Seleccione el departamento ...'],
+    'pluginOptions' => [
+        'allowClear' => true
+    ],
+    ]) 
+    ?>
 
     <?= $form->field($model, 'estado')->dropDownList([ 'validado' => 'Validado', 'no validado' => 'No validado', ], ['prompt' => '']) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Registrar' : 'Confirmar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

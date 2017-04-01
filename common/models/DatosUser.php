@@ -64,7 +64,7 @@ class DatosUser extends \yii\db\ActiveRecord
             'telefono' => 'Telefono',
             'idUser' => 'Usuario',
             'idDepartamento' => 'Departamento',
-            'estado' => 'Estado',
+            'estado' => 'Veracidad de los datos',
         ];
     }
 

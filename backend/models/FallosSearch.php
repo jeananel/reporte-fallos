@@ -41,7 +41,7 @@ class FallosSearch extends Fallos
      */
     public function search($params)
     {
-        $query = Fallos::find();
+        $query = Fallos::find()->orderBy(['created_by' => SORT_DESC]);
 
         // add conditions that should always apply here
 

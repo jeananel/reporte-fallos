@@ -7,24 +7,29 @@ use yii\grid\GridView;
 /* @var $searchModel backend\models\DatosUserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Datos Users';
+$this->title = 'Datos de usuarios';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="datos-user-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Datos User', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'rowOptions' => function ($model, $index, $widget, $grid) {
+            if ($model->estado == 'validado') {
+                return ['class' => 'info'];
+            } else {
+                return ['class' => 'warning'];
+            }
+        },          
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idDatos',
+           // 'idDatos',
             'apellidos',
             'nombres',
             'fecha_nacimiento',
@@ -33,9 +38,27 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'telefono',
             // 'idUser',
             // 'idDepartamento',
-            // 'estado',
+             'estado',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{confirmar}',
+                'buttons' => [
+                'confirmar' => function ($url, $model, $key) {
+                    return Html::a ( '<span class="glyphicon glyphicon-ok-circle"> Confirmar Datos</span>', ['datos-user/update', 'id' => $model->idDatos] );
+                },
+                ],
+            ],                        
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{ver}',
+                'buttons' => [
+                'ver' => function ($url, $model, $key) {
+                    return Html::a (   '<span class="glyphicon glyphicon-list"> Ver Información</span>', ['datos-user/view', 'id' => $model->idDatos] );
+                },
+                ],
+            ], 
         ],
     ]); ?>
+  
 </div>

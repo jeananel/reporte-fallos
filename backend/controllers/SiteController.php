@@ -60,7 +60,15 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (Yii::$app->user->can('administrador') || Yii::$app->user->can('tics')) {
+            return $this->render('index');
+        } else {
+            Yii::$app->user->logout();
+            Yii::$app->session->setFlash('error', "A C C E S O  -  R E S T R I N G I D O");
+            Yii::$app->session->setFlash('info', "Solo permitido para administradores del sistema.");
+            return $this->goBack();
+           
+        }
     }
 
     /**

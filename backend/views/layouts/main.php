@@ -18,6 +18,7 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="<?php echo Yii::$app->request->baseUrl; ?>/favicon.ico" type="image/x-icon" />
     <?= Html::csrfMetaTags() ?>
     <title>Reporte fallos - Administracion</title>
     <?php $this->head() ?>
@@ -41,12 +42,13 @@ AppAsset::register($this);
             ['label' => 'Acerca de', 'url' => ['/site/about'], 'visible'=> Yii::$app->user->isGuest],
             ['label' => 'Administracion', 'url' => ['/user/admin'] , 'visible'=> Yii::$app->user->can('administrador')],
                 [
-                     'label' => 'Opciones',
+                     'label' => 'Opciones', 'visible'=> Yii::$app->user->can('administrador'),
                      'items' => [
                           ['label' => 'Departamentos', 'url' => ['/departamento/index']],
                           '<li class="divider"></li>',
                           '<li class="dropdown-header">Sistema</li>',
                           ['label' => 'Dispositivos', 'url' => ['/dispositivo/index']],
+                         ['label' => 'Usuarios de los Departamentos', 'url' => ['/datos-user/index']],
                           ['label' => 'Fallos', 'url' => ['/fallos/index']],
                      ],
                  ],

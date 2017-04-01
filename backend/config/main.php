@@ -54,8 +54,8 @@ return [
                         // restrict access to recovery and registration controllers from backend
                         //'as backend' => 'cinghie\yii2userextended\filters\BackendFilter',
                         // Settings
-                        //'enableRegistration' => false,
-                        //'enableConfirmation' => true,
+                        'enableRegistration' => false,
+                        'enableConfirmation' => false,
                         //'controllers' => [!'profile', !'recovery', !'settings', !'admin'],
                         //'admins' => ['superadmin'],
                         'class' => 'dektrium\user\Module',

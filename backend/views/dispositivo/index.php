@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="dispositivo-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
 
@@ -37,7 +37,12 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'updated_by',
             // 'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            //['class' => 'yii\grid\ActionColumn'],
+[
+    'class' => 'yii\grid\ActionColumn',
+    'template' => '{view} {update}',
+
+],            
         ],
     ]); ?>
     <p style=" text-align: center">

@@ -29,7 +29,7 @@ class DepartamentoController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['index', 'update', 'view', 'delete'],
+                        'actions' => ['index', 'update', 'view'],
                         'allow' => true,
                         'roles' => ['administrador'],
                     ],                   

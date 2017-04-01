@@ -42,14 +42,17 @@ class FallosSearch extends Fallos
     public function search($params)
     {
         //$query = $this->getAllLeft(\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])->idDepartamento);
-         $query = Fallos::find()
+        
+        $flag = !isset(\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])->idDepartamento) ? 0 : \common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])->idDepartamento;
+        
+        $query = Fallos::find()
                  ->select(['fallos.*','fallos.idFallos','fallos.idDispositivo',  'fallos.created_by','fallos.created_at','fallos.updated_by','fallos.updated_at', "fallos.descripcion" ,  "fallos.respuesta", "fallos.estado" ])
             ->from('fallos')
             ->leftJoin('dispositivo', '`dispositivo`.`idDispositivo` = `fallos`.`idDispositivo`')
             ->leftJoin('departamento', '`departamento`.`idDepartamento` = `dispositivo`.`idDepartamento` ')
-                ->where(['departamento.idDepartamento'=>\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])->idDepartamento]);
+                ->where(['departamento.idDepartamento'=> $flag ]);
 
-
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
              'pagination' => [ 'pageSize' => 5 ],
