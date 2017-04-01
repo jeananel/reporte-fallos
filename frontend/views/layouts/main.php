@@ -34,27 +34,53 @@ AppAsset::register($this);
             'class' => 'my-navbar navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Inicio', 'url' => ['/site/index']],
-        ['label' => 'Acerca de', 'url' => ['/site/about']],
-        ['label' => 'Contactos', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Registrarse', 'url' => ['/user/registration/register ']];
-        $menuItems[] = ['label' => 'Ingresar', 'url' => ['/user/security/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/user/security/logout '], 'post')
-            . Html::submitButton(
-                'Salir (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
+//    $menuItems = [
+//        ['label' => 'Inicio', 'url' => ['/site/index']],
+//        ['label' => 'Acerca de', 'url' => ['/site/about']],
+//        ['label' => 'Contactos', 'url' => ['/site/contact']],
+//    ];
+//    if (Yii::$app->user->isGuest) {
+//        $menuItems[] = ['label' => 'Registrarse', 'url' => ['/user/registration/register ']];
+//        $menuItems[] = ['label' => 'Ingresar', 'url' => ['/user/security/login']];
+//    } else {
+//        $menuItems[] = '<li>'
+//            . Html::beginForm(['/user/security/logout '], 'post')
+//            . Html::submitButton(
+//                'Salir (' . Yii::$app->user->identity->username . ')',
+//                ['class' => 'btn btn-link logout']
+//            )
+//            . Html::endForm()
+//            . '</li>';
+//    }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
+        'items' => [
+            ['label' => 'Inicio', 'url' => ['/site/index']],
+            ['label' => 'Acerca de', 'url' => ['/site/about'], 'visible'=> Yii::$app->user->isGuest],
+            ['label' => 'Administracion', 'url' => ['/user/admin'] , 'visible'=> Yii::$app->user->can('administrador')],
+                [
+                     'label' => 'Opciones',
+                     'items' => [
+                          ['label' => 'Reportar fallos', 'url' => ['/fallos/index']],
+                          '<li class="divider"></li>',
+                          '<li class="dropdown-header">Sistema</li>',
+                          ['label' => 'Datos personales', 'url' => ['/datos-user/index']],
+                          //['label' => 'Fallos', 'url' => ['/fallos/index']],
+                     ],
+                 ],
+            Yii::$app->user->isGuest ? (
+                ['label' => 'Ingresar', 'url' => ['/user/login']]
+            ) : (
+                '<li>'
+                . Html::beginForm(['/user/logout'], 'post')
+                . Html::submitButton(
+                    'Salir (' . Yii::$app->user->identity->username . ')',
+                    ['class' => 'btn btn-link logout']
+                )
+                . Html::endForm()
+                . '</li>'
+            )
+        ],
     ]);
     NavBar::end();
     ?>

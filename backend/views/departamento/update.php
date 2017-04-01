@@ -7,12 +7,12 @@ use yii\helpers\Html;
 
 $this->title = 'Update Departamento: ' . $model->idDepartamento;
 $this->params['breadcrumbs'][] = ['label' => 'Departamentos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->idDepartamento, 'url' => ['view', 'id' => $model->idDepartamento]];
-$this->params['breadcrumbs'][] = 'Update';
+
+$this->params['breadcrumbs'][] = 'Actualización de departamento';
 ?>
 <div class="departamento-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= $model->nombre ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

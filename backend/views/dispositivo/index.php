@@ -15,20 +15,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Dispositivo', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idDispositivo',
-            'serie',
+            //'idDispositivo',
+            
             'nombre',
             'marca',
-            'idDepartamento',
+            'serie',
+            [
+              'attribute' => 'idDepartamento',
+              'value' => 'idDepartamento0.nombre'
+            ],
+            //'idDepartamento',
             // 'created_by',
             // 'created_at',
             // 'updated_by',
@@ -37,4 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+    <p style=" text-align: center">
+        <?= Html::a('Registrar Dispositivo', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>    
 </div>

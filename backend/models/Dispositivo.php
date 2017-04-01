@@ -44,6 +44,7 @@ class Dispositivo extends \yii\db\ActiveRecord
             [['idDepartamento', 'created_by', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['serie'], 'string', 'max' => 10],
+            ['serie', 'unique', 'targetAttribute' => ['serie'], 'message' => 'El codigo del dispositivo no se puede repetir.'],
             [['nombre', 'marca'], 'string', 'max' => 50],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => \dektrium\user\models\User::className(), 'targetAttribute' => ['created_by' => 'id']],
             [['updated_by'], 'exist', 'skipOnError' => true, 'targetClass' => \dektrium\user\models\User::className(), 'targetAttribute' => ['updated_by' => 'id']],
@@ -61,11 +62,11 @@ class Dispositivo extends \yii\db\ActiveRecord
             'serie' => 'Serie',
             'nombre' => 'Nombre',
             'marca' => 'Marca',
-            'idDepartamento' => 'Id Departamento',
-            'created_by' => 'Created By',
-            'created_at' => 'Created At',
-            'updated_by' => 'Updated By',
-            'updated_at' => 'Updated At',
+            'idDepartamento' => 'Departamento',
+            'created_by' => 'Creado por',
+            'created_at' => 'Hora de registro',
+            'updated_by' => 'Actualizado por',
+            'updated_at' => 'Hora de actualización',
         ];
     }
     // ---> TRIGERS 
@@ -92,7 +93,7 @@ class Dispositivo extends \yii\db\ActiveRecord
      */
     public function getCreatedBy()
     {
-        return $this->hasOne(User::className(), ['id' => 'created_by']);
+        return $this->hasOne(\common\models\User::className(), ['id' => 'created_by']);
     }
 
     /**
@@ -100,7 +101,7 @@ class Dispositivo extends \yii\db\ActiveRecord
      */
     public function getUpdatedBy()
     {
-        return $this->hasOne(User::className(), ['id' => 'updated_by']);
+        return $this->hasOne(\common\models\User::className(), ['id' => 'updated_by']);
     }
 
     /**

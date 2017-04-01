@@ -8,15 +8,24 @@ use yii\widgets\DetailView;
 
 $this->title = $model->idDepartamento;
 $this->params['breadcrumbs'][] = ['label' => 'Departamentos', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
+$this->params['breadcrumbs'][] = $model->nombre;
 ?>
 <div class="departamento-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+
+
+
+    <?= DetailView::widget([
+        'model' => $model,
+        'attributes' => [
+            //'idDepartamento',
+            'nombre',
+        ],
+    ]) ?>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->idDepartamento], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->idDepartamento], [
+        <?= Html::a('Actualizar Departamento', ['update', 'id' => $model->idDepartamento], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Borrar registro', ['delete', 'id' => $model->idDepartamento], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -24,13 +33,4 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'idDepartamento',
-            'nombre',
-        ],
-    ]) ?>
-
 </div>

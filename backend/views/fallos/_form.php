@@ -40,7 +40,14 @@ use kartik\select2\Select2;
     
     
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?php
+                    if ($model->estado == 'no atendido'){
+                         echo Html::submitButton($model->isNewRecord ? 'Create' : 'Resolver', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ;
+                    } else {
+                        echo  '<h3><span class="label label-info">El problema ya fue atendido!</span><h3>';
+                    }
+                   
+                    ?>
     </div>
 
     <?php ActiveForm::end(); ?>

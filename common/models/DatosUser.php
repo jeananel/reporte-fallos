@@ -62,8 +62,8 @@ class DatosUser extends \yii\db\ActiveRecord
             'genero' => 'Genero',
             'direccion_principal' => 'Direccion Principal',
             'telefono' => 'Telefono',
-            'idUser' => 'Id User',
-            'idDepartamento' => 'Id Departamento',
+            'idUser' => 'Usuario',
+            'idDepartamento' => 'Departamento',
             'estado' => 'Estado',
         ];
     }
