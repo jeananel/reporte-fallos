@@ -12,12 +12,9 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="fallos-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Reportar fallo', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'rowOptions' => function ($model, $index, $widget, $grid) {
@@ -48,7 +45,13 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'updated_by',
             // 'updated_at',
 
-            ['class' => 'yii\grid\ActionColumn'],
+                    [
+                        'class' => yii\grid\ActionColumn::className(),'template'=>'{view}', 
+                        //'visible' => Yii::$app->user->isGuest,
+                    ]
         ],
     ]); ?>
+    <p style=" text-align: center">
+        <?= Html::a('Reportar fallo', ['create'], ['class' => 'btn btn-success']) ?>
+    </p>
 </div>
