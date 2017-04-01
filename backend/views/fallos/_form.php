@@ -16,7 +16,7 @@ use kartik\select2\Select2;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'descripcion')->textarea(['maxlength' => true, 'rows' => '6', 'disabled'=>true]) ?>
 
     <?= $form->field($model, 'respuesta')->textInput(['maxlength' => true]) ?>
 
@@ -28,6 +28,7 @@ use kartik\select2\Select2;
     'data' => \yii\helpers\ArrayHelper::map(\backend\models\Dispositivo::find()->all(), 'idDispositivo', function ($model, $defaultValue) {
                 return $model->nombre . ' - ' . $model->serie;
             }),
+                    'disabled' => true,
     'language' => 'es',
     'options' => ['placeholder' => 'Seleccione el departamento ...'],
     'pluginOptions' => [

@@ -34,9 +34,9 @@ class FallosController extends Controller
                         'roles' => ['administrador'],
                     ],                   
                     [
-                        'actions' => ['index','view'],
+                        'actions' => ['index', 'update','view'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'roles' => ['tics'],
                     ],
                 ],
             ],            
