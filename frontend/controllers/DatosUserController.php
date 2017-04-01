@@ -20,6 +20,26 @@ class DatosUserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    // Roles ? => Visitante , @ => Usuario logeado, superadmin=> super administrador , admin => docentes
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['index', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['administrador'],
+                    ],                   
+                    [
+                        'actions' => ['create', 'update','view'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],                 
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -64,9 +84,15 @@ class DatosUserController extends Controller
     public function actionCreate()
     {
         $model = new DatosUser();
+        
+        $model->idUser = Yii::$app->user->getId();
+        
+        if (\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])){
+            return $this->redirect(['update', 'id'=>\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])->idDatos]);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idDatos]);
+            return $this->redirect(['site/index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

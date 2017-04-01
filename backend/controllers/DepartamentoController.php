@@ -20,6 +20,26 @@ class DepartamentoController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => \yii\filters\AccessControl::className(),
+                'rules' => [
+                    // Roles ? => Visitante , @ => Usuario logeado, superadmin=> super administrador , admin => docentes
+                    [
+                        'actions' => ['login', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['index', 'update', 'view', 'delete'],
+                        'allow' => true,
+                        'roles' => ['administrador'],
+                    ],                   
+                    [
+                        'actions' => ['index', 'update','view'],
+                        'allow' => true,
+                        'roles' => ['tics'],
+                    ],
+                ],
+            ],                 
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [

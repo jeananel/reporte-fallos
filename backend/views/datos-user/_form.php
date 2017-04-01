@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\datetime\DateTimePicker;
 /* @var $this yii\web\View */
 /* @var $model common\models\DatosUser */
 /* @var $form yii\widgets\ActiveForm */
@@ -16,7 +16,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'nombres')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'fecha_nacimiento')->textInput() ?>
+                <?=
+                $form->field($model, 'fecha_nacimiento')->widget(DateTimePicker::className(), [
+                    'pluginOptions' => [
+                        'value' => new Expression('NOW()'),
+                        'autoclose' => true,
+                        'format' => 'yyyy-mm-dd',
+                    ]
+                ])
+                ?>  
 
     <?= $form->field($model, 'genero')->dropDownList([ 'masculino' => 'Masculino', 'femenino' => 'Femenino', ], ['prompt' => '']) ?>
 

@@ -47,6 +47,7 @@ class FallosSearch extends Fallos
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+             'pagination' => [ 'pageSize' => 5 ],
         ]);
 
         $this->load($params);

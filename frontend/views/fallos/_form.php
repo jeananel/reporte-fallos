@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
  <?= $form->field($model, 'descripcion')->textarea(['maxlength' => true, 'rows' => '6']) ?>
 
     <?= $form->field($model, 'idDispositivo')->widget(\kartik\select2\Select2::classname(), [
-    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Dispositivo::find()->all(), 'idDispositivo', function ($model, $defaultValue) {
+    'data' => \yii\helpers\ArrayHelper::map(\backend\models\Dispositivo::find()->where(['idDepartamento'=>\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])->idDepartamento])->all(), 'idDispositivo', function ($model, $defaultValue) {
                 return $model->nombre . ' - ' . $model->serie;
             }),
     'language' => 'es',

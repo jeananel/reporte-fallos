@@ -60,14 +60,23 @@ AppAsset::register($this);
             ['label' => 'Administracion', 'url' => ['/user/admin'] , 'visible'=> Yii::$app->user->can('administrador')],
                 [
                      'label' => 'Opciones',
+                    'visible'=> !Yii::$app->user->isGuest,
                      'items' => [
                           ['label' => 'Reportar fallos', 'url' => ['/fallos/index']],
-                          '<li class="divider"></li>',
-                          '<li class="dropdown-header">Sistema</li>',
-                          ['label' => 'Datos personales', 'url' => ['/datos-user/index']],
+                          //'<li class="divider"></li>',
+                          //'<li class="dropdown-header">Sistema</li>',
+                          //['label' => 'Datos personales', 'url' => [ \common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()]) ?  ['/datos-user/update',['id'=>Yii::$app->user->getId()]] : ['/datos-user/index']  ]],
                           //['label' => 'Fallos', 'url' => ['/fallos/index']],
                      ],
                  ],
+
+                  (\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()]))  ? (
+                ['label' => 'Datos Personales', 'visible'=>!Yii::$app->user->isGuest ,'url' =>  yii\helpers\Url::to(['/datos-user/update', 'id'=>\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])->idDatos]) ]
+            ) : (
+                ['label' => 'Datos Personales','visible'=>!Yii::$app->user->isGuest, 'url' => ['/datos-user/create'] ]
+            ),            
+            
+            
             Yii::$app->user->isGuest ? (
                 ['label' => 'Ingresar', 'url' => ['/user/login']]
             ) : (
@@ -96,9 +105,9 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Sistema de reporte de fallos</p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right"><?= date('Y') ?></p>
     </div>
 </footer>
 
