@@ -41,9 +41,14 @@ class FallosSearch extends Fallos
      */
     public function search($params)
     {
-        $query = Fallos::find();
+        //$query = $this->getAllLeft(\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])->idDepartamento);
+         $query = Fallos::find()
+                 ->select(['fallos.*','fallos.idFallos','fallos.idDispositivo',  'fallos.created_by','fallos.created_at','fallos.updated_by','fallos.updated_at', "fallos.descripcion" ,  "fallos.respuesta", "fallos.estado" ])
+            ->from('fallos')
+            ->leftJoin('dispositivo', '`dispositivo`.`idDispositivo` = `fallos`.`idDispositivo`')
+            ->leftJoin('departamento', '`departamento`.`idDepartamento` = `dispositivo`.`idDepartamento` ')
+                ->where(['departamento.idDepartamento'=>\common\models\DatosUser::findOne(['idUser'=>Yii::$app->user->getId()])->idDepartamento]);
 
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -72,6 +77,26 @@ class FallosSearch extends Fallos
             ->andFilterWhere(['like', 'respuesta', $this->respuesta])
             ->andFilterWhere(['like', 'estado', $this->estado]);
 
+        
         return $dataProvider;
     }
+
+//        //CONSULTA PERSONALIZADA 
+//    public function getAllLeft($departamento){
+//        //CONCAT(Nombre,  ' ', Apellido) as NombreCte
+//        $query = new \yii\db\Query();
+//        $query
+//            ->select(['fallos.*','fallos.idFallos','fallos.idDispositivo',  'fallos.created_by','fallos.created_at','fallos.updated_by','fallos.updated_at', "fallos.descripcion" ,  "fallos.respuesta", "fallos.estado" ])
+//            ->from('fallos')
+//            ->leftJoin('dispositivo', '`dispositivo`.`idDispositivo` = `fallos`.`idDispositivo`')
+//            ->leftJoin('departamento', '`departamento`.`idDepartamento` = `dispositivo`.`idDepartamento` ')
+//                ->where(['departamento.idDepartamento'=>$departamento]);
+//            
+//        $cmd = $query->createCommand();
+//        $padres = $cmd->queryAll();
+//        
+//        return $padres;
+//    }    
+    
+    
 }
